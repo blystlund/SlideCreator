@@ -1,0 +1,375 @@
+.app {
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ── Header ── */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-logo {
+  height: 72px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(1) opacity(0.9);
+}
+
+.header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  letter-spacing: 0.02em;
+}
+
+.header p {
+  color: #c0a0a0;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Layout ── */
+.main {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+/* ── Cards ── */
+.input-card {
+  background: #550000;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #7a0000;
+}
+
+.input-card h2 {
+  font-size: 0.95rem;
+  margin-bottom: 0.25rem;
+  color: #f0f0f0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.input-hint {
+  font-size: 0.8rem;
+  color: #c0a0a0;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Inputs ── */
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-row input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #880000;
+  background: #4a0000;
+  color: #f0f0f0;
+  font-size: 0.95rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.input-row input::placeholder {
+  color: #a06060;
+}
+
+.input-row input:focus {
+  outline: none;
+  border-color: #d4d4d4;
+}
+
+.input-row input:disabled {
+  opacity: 0.6;
+}
+
+.input-card textarea {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #880000;
+  background: #4a0000;
+  color: #f0f0f0;
+  font-size: 0.95rem;
+  font-family: 'Montserrat', sans-serif;
+  resize: vertical;
+  margin-bottom: 0.75rem;
+}
+
+.input-card textarea::placeholder {
+  color: #a06060;
+}
+
+.input-card textarea:focus {
+  outline: none;
+  border-color: #d4d4d4;
+}
+
+/* ── Buttons ── */
+.input-row button,
+.button-row button {
+  padding: 0.6rem 1.1rem;
+  border-radius: 6px;
+  border: none;
+  background: #d4d4d4;
+  color: #440000;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.input-row button:hover:not(:disabled),
+.button-row button:hover:not(:disabled) {
+  background: #ffffff;
+}
+
+.input-row button:disabled,
+.button-row button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.button-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.file-label {
+  display: inline-block;
+}
+
+.file-button {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border-radius: 6px;
+  background: #7a0000;
+  border: 1px solid #aa0000;
+  color: #e0e0e0;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  transition: background 0.15s;
+}
+
+.file-button:hover {
+  background: #8a0000;
+}
+
+.error {
+  color: #ffaaaa;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+/* ── Slides section ── */
+.slides-section {
+  background: #550000;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #7a0000;
+}
+
+.slides-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.slides-header h2 {
+  font-size: 0.95rem;
+  color: #f0f0f0;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.clear-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #aa6666;
+  background: transparent;
+  color: #cc9999;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.clear-btn:hover {
+  border-color: #ffaaaa;
+  color: #ffaaaa;
+}
+
+.download-all {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background: #d4d4d4;
+  color: #440000;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  transition: background 0.15s;
+}
+
+.download-all:hover:not(:disabled) {
+  background: #ffffff;
+}
+
+.download-all:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 2.5rem;
+  color: #c0a0a0;
+}
+
+.empty-hint {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  color: #a07070;
+}
+
+/* ── Slide grid ── */
+.slides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.slide-item {
+  position: relative;
+}
+
+/* Checkerboard shows transparency */
+.slide-preview {
+  background-color: #2a2a2a;
+  background-image:
+    linear-gradient(45deg, #3a3a3a 25%, transparent 25%),
+    linear-gradient(-45deg, #3a3a3a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #3a3a3a 75%),
+    linear-gradient(-45deg, transparent 75%, #3a3a3a 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #880000;
+  transition: border-color 0.15s;
+}
+
+.slide-item:hover .slide-preview {
+  border-color: #d4d4d4;
+}
+
+.slide-canvas-wrapper canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.slide-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.35rem 0.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: #d0d0d0;
+  font-size: 0.7rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* ── Slide action buttons ── */
+.slide-actions {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  display: flex;
+  gap: 0.2rem;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.slide-item:hover .slide-actions {
+  opacity: 1;
+}
+
+.slide-actions button {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: none;
+  background: rgba(0, 0, 0, 0.85);
+  color: #d4d4d4;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.1s;
+}
+
+.slide-actions button:hover:not(:disabled) {
+  background: rgba(80, 0, 0, 0.95);
+  color: #fff;
+}
+
+.slide-actions button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.slide-actions .delete-btn:hover {
+  background: #cc0000 !important;
+}
+
+/* ── Footer ── */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  color: #a06060;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
