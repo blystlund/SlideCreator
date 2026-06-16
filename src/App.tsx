@@ -13,21 +13,18 @@ const CANVAS_WIDTH = 1920
 const CANVAS_HEIGHT = 1080
 const MARGIN = 160
 
-async function fetchVerse(reference: string): Promise<{ verse: string; reference: string } | null> {
+async function fetchVerses(reference: string): Promise<Array<{ verse: string; reference: string }> | null> {
   try {
     const encoded = encodeURIComponent(reference.trim())
     const response = await fetch(`https://bible-api.com/${encoded}?translation=kjv`)
     if (!response.ok) return null
     const data = await response.json()
-    if (data.error) return null
-    if (data.verses && data.verses.length > 0) {
-      const text = data.verses.map((v: any) => v.text.trim()).join(' ')
-      return {
-        verse: text,
-        reference: data.reference || `${data.verses[0].book_name} ${data.verses[0].chapter}:${data.verses[0].verse}`
-      }
-    }
-    return null
+    if (data.error || !data.verses || !data.verses.length) return null
+    // One slide per verse
+    return data.verses.map((v: any) => ({
+      verse: v.text.trim(),
+      reference: `${v.book_name} ${v.chapter}:${v.verse}`,
+    }))
   } catch {
     return null
   }
@@ -133,23 +130,23 @@ export default function App() {
     if (!verseInput.trim()) return
     setVerseLoading(true)
     setVerseError('')
-    const result = await fetchVerse(verseInput)
+    const results = await fetchVerses(verseInput)
     setVerseLoading(false)
-    if (result) {
-      const newSlide: Slide = {
+    if (results && results.length > 0) {
+      const newSlides: Slide[] = results.map(r => ({
         id: crypto.randomUUID(),
         type: 'verse',
-        content: result.verse,
-        reference: result.reference,
-      }
+        content: r.verse,
+        reference: r.reference,
+      }))
       setSlides(prev => {
-        if (insertAfter === null) return [...prev, newSlide]
+        if (insertAfter === null) return [...prev, ...newSlides]
         const arr = [...prev]
-        arr.splice(insertAfter + 1, 0, newSlide)
+        arr.splice(insertAfter + 1, 0, ...newSlides)
         return arr
       })
       setVerseInput('')
-      if (insertAfter !== null) setInsertAfter(insertAfter + 1)
+      if (insertAfter !== null) setInsertAfter(insertAfter + newSlides.length)
     } else {
       setVerseError('Verse not found. Try "John 3:16" or "Psalm 23:1-6".')
     }
