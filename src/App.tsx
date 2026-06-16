@@ -113,16 +113,19 @@ export default function App() {
   const [inputText, setInputText] = useState('')
   const [exporting, setExporting] = useState(false)
 
-  // Insert-at position: null = append to end, number = insert after that index
+  // Insert-at position: null = append to end
   const [insertAfter, setInsertAfter] = useState<number | null>(null)
 
-  // Edit modal
+  // Edit panel (right side)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editContent, setEditContent] = useState('')
   const [editReference, setEditReference] = useState('')
 
   const fileInputRef = useRef<HTMLInputElement>(null)
   const canvasGridRef = useRef<HTMLDivElement>(null)
+  const editTextareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const editingSlide = slides.find(s => s.id === editingId) ?? null
 
   // ── Verse ─────────────────────────────────────────────────────────────────
 
@@ -146,7 +149,6 @@ export default function App() {
         return arr
       })
       setVerseInput('')
-      // Advance insert position so next verse goes right after the one just added
       if (insertAfter !== null) setInsertAfter(insertAfter + 1)
     } else {
       setVerseError('Verse not found. Try "John 3:16" or "Psalm 23:1-6".')
@@ -196,12 +198,13 @@ export default function App() {
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
-  // ── Edit ──────────────────────────────────────────────────────────────────
+  // ── Edit panel ────────────────────────────────────────────────────────────
 
   const startEdit = (slide: Slide) => {
     setEditingId(slide.id)
     setEditContent(slide.content)
     setEditReference(slide.reference || '')
+    setTimeout(() => editTextareaRef.current?.focus(), 50)
   }
 
   const saveEdit = () => {
@@ -218,7 +221,10 @@ export default function App() {
 
   // ── Slide management ──────────────────────────────────────────────────────
 
-  const removeSlide = (id: string) => setSlides(prev => prev.filter(s => s.id !== id))
+  const removeSlide = (id: string) => {
+    if (editingId === id) setEditingId(null)
+    setSlides(prev => prev.filter(s => s.id !== id))
+  }
 
   const moveSlide = (index: number, dir: 'up' | 'down') => {
     const next = dir === 'up' ? index - 1 : index + 1
@@ -258,7 +264,7 @@ export default function App() {
     setExporting(false)
   }
 
-  const clearAll = () => { if (confirm('Remove all slides?')) setSlides([]) }
+  const clearAll = () => { if (confirm('Remove all slides?')) { setSlides([]); setEditingId(null) } }
 
   // ── Render ────────────────────────────────────────────────────────────────
 
@@ -272,72 +278,145 @@ export default function App() {
         </div>
       </header>
 
-      <main className="main">
-        <section className="input-section">
+      <div className="app-body">
 
-          <div className="input-card">
-            <h2>Scripture Verse</h2>
-            {insertAfter !== null ? (
-              <p className="input-hint insert-active">
-                Inserting after slide {insertAfter + 1}
-                <button className="clear-insert" onClick={() => setInsertAfter(null)}>✕ back to end</button>
-              </p>
-            ) : (
-              <p className="input-hint">Single verse or passage — e.g. "John 3:16" or "Romans 8:28-30"</p>
-            )}
-            <div className="input-row">
-              <input
-                type="text"
-                value={verseInput}
-                onChange={e => setVerseInput(e.target.value)}
-                placeholder="e.g. John 3:16"
-                onKeyDown={e => e.key === 'Enter' && addVerseSlide()}
-                disabled={verseLoading}
+        {/* ── Left panel ─────────────────────────────────────────────────── */}
+        <div className="left-panel">
+
+          <section className="input-section">
+            <div className="input-card">
+              <h2>Scripture Verse</h2>
+              {insertAfter !== null ? (
+                <p className="input-hint insert-active">
+                  Inserting after slide {insertAfter + 1}
+                  <button className="clear-insert" onClick={() => setInsertAfter(null)}>✕ back to end</button>
+                </p>
+              ) : (
+                <p className="input-hint">Single verse or passage — e.g. "John 3:16" or "Romans 8:28-30"</p>
+              )}
+              <div className="input-row">
+                <input
+                  type="text"
+                  value={verseInput}
+                  onChange={e => setVerseInput(e.target.value)}
+                  placeholder="e.g. John 3:16"
+                  onKeyDown={e => e.key === 'Enter' && addVerseSlide()}
+                  disabled={verseLoading}
+                />
+                <button onClick={addVerseSlide} disabled={verseLoading || !verseInput.trim()}>
+                  {verseLoading ? 'Loading…' : 'Add'}
+                </button>
+              </div>
+              {verseError && <p className="error">{verseError}</p>}
+            </div>
+
+            <div className="input-card">
+              <h2>Sermon Notes</h2>
+              <p className="input-hint">Each line becomes a slide. Upload .docx or paste text below.</p>
+              <textarea
+                value={inputText}
+                onChange={e => setInputText(e.target.value)}
+                placeholder={"Each line becomes its own slide.\nPaste your notes or points here."}
+                rows={4}
               />
-              <button onClick={addVerseSlide} disabled={verseLoading || !verseInput.trim()}>
-                {verseLoading ? 'Loading…' : 'Add'}
-              </button>
+              <div className="button-row">
+                <button onClick={addTextSlides} disabled={!inputText.trim()}>Add as Slides</button>
+                <label className="file-label">
+                  <input ref={fileInputRef} type="file" accept=".docx,.txt" onChange={handleFileUpload} hidden />
+                  <span className="file-button">Upload .docx</span>
+                </label>
+              </div>
             </div>
-            {verseError && <p className="error">{verseError}</p>}
-          </div>
+          </section>
 
-          <div className="input-card">
-            <h2>Sermon Notes</h2>
-            <p className="input-hint">Each line becomes a slide. Upload .docx or paste text below.</p>
-            <textarea
-              value={inputText}
-              onChange={e => setInputText(e.target.value)}
-              placeholder={"Each line becomes its own slide.\nPaste your notes or points here."}
-              rows={4}
-            />
-            <div className="button-row">
-              <button onClick={addTextSlides} disabled={!inputText.trim()}>Add as Slides</button>
-              <label className="file-label">
-                <input ref={fileInputRef} type="file" accept=".docx,.txt" onChange={handleFileUpload} hidden />
-                <span className="file-button">Upload .docx</span>
-              </label>
+          <section className="slides-section">
+            <div className="slides-header">
+              <h2>
+                Slides
+                {slides.length > 0 && <span className="slide-count">{slides.length}</span>}
+              </h2>
+              {slides.length > 0 && (
+                <div className="header-actions">
+                  {insertAfter !== null && (
+                    <span className="insert-badge">Inserting after #{insertAfter + 1}</span>
+                  )}
+                  <button className="clear-btn" onClick={clearAll}>Clear All</button>
+                  <button className="download-all" onClick={downloadAll} disabled={exporting}>
+                    {exporting ? 'Downloading…' : 'Download All PNGs'}
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
 
-        </section>
+            {slides.length === 0 ? (
+              <div className="empty-state">
+                <p>No slides yet.</p>
+                <p className="empty-hint">Add scripture verses or sermon notes above.</p>
+              </div>
+            ) : (
+              <div className="slides-grid" ref={canvasGridRef}>
+                {slides.map((slide, index) => (
+                  <div
+                    key={slide.id}
+                    className={[
+                      'slide-item',
+                      editingId === slide.id ? 'editing' : '',
+                      insertAfter === index ? 'insert-target' : '',
+                    ].filter(Boolean).join(' ')}
+                  >
+                    <div className="slide-preview-wrap" onClick={() => startEdit(slide)}>
+                      <SlidePreview slide={slide} />
+                      <div className="slide-overlay">
+                        <div className="slide-actions-top">
+                          <button onClick={e => { e.stopPropagation(); moveSlide(index, 'up') }} disabled={index === 0} title="Move up">↑</button>
+                          <button onClick={e => { e.stopPropagation(); moveSlide(index, 'down') }} disabled={index === slides.length - 1} title="Move down">↓</button>
+                          <button
+                            onClick={e => { e.stopPropagation(); selectInsertPosition(index) }}
+                            className={`insert-btn${insertAfter === index ? ' active' : ''}`}
+                            title="Insert verse after this slide"
+                          >+</button>
+                          <button onClick={e => { e.stopPropagation(); startEdit(slide) }} className="edit-btn" title="Edit">✎</button>
+                          <button onClick={e => { e.stopPropagation(); removeSlide(slide.id) }} className="delete-btn" title="Remove">✕</button>
+                        </div>
+                        <button className="download-single" onClick={e => { e.stopPropagation(); downloadOne(index) }}>↓ PNG</button>
+                      </div>
+                    </div>
+                    <div className="slide-label">
+                      {slide.type === 'verse' ? slide.reference : slide.content.slice(0, 48)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
 
-        {/* ── Edit Modal ─────────────────────────────────────────────────────── */}
-        {editingId && (
-          <div className="edit-overlay" onClick={cancelEdit}>
-            <div className="edit-modal" onClick={e => e.stopPropagation()}>
-              <h3 className="edit-title">Edit Slide</h3>
+          <footer className="footer">
+            <p>1920×1080 · Transparent background · Montserrat · KJV</p>
+          </footer>
+        </div>
+
+        {/* ── Right edit panel ────────────────────────────────────────────── */}
+        <div className={`right-panel${editingId ? '' : ' hidden'}`}>
+          {editingSlide && (
+            <div className="edit-panel-inner">
+              <div className="edit-panel-header">
+                <span className="edit-panel-title">
+                  {editingSlide.type === 'verse' ? 'Edit Verse' : 'Edit Slide'}
+                </span>
+                <button className="edit-panel-close" onClick={cancelEdit} title="Close">✕</button>
+              </div>
 
               <label className="edit-label">Text</label>
               <textarea
+                ref={editTextareaRef}
                 className="edit-textarea"
                 value={editContent}
                 onChange={e => setEditContent(e.target.value)}
-                autoFocus
               />
 
-              {slides.find(s => s.id === editingId)?.type === 'verse' && (
+              {editingSlide.type === 'verse' && (
                 <>
-                  <label className="edit-label">Reference (shown below the verse)</label>
+                  <label className="edit-label">Reference</label>
                   <input
                     className="edit-input"
                     value={editReference}
@@ -351,71 +430,10 @@ export default function App() {
                 <button className="btn-save" onClick={saveEdit}>Save</button>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* ── Slides ────────────────────────────────────────────────────────── */}
-        <section className="slides-section">
-          <div className="slides-header">
-            <h2>
-              Slides
-              {slides.length > 0 && <span className="slide-count">{slides.length}</span>}
-            </h2>
-            {slides.length > 0 && (
-              <div className="header-actions">
-                {insertAfter !== null && (
-                  <span className="insert-badge">Inserting after #{insertAfter + 1}</span>
-                )}
-                <button className="clear-btn" onClick={clearAll}>Clear All</button>
-                <button className="download-all" onClick={downloadAll} disabled={exporting}>
-                  {exporting ? 'Downloading…' : 'Download All PNGs'}
-                </button>
-              </div>
-            )}
-          </div>
-
-          {slides.length === 0 ? (
-            <div className="empty-state">
-              <p>No slides yet.</p>
-              <p className="empty-hint">Add scripture verses or sermon notes above.</p>
-            </div>
-          ) : (
-            <div className="slides-grid" ref={canvasGridRef}>
-              {slides.map((slide, index) => (
-                <div
-                  key={slide.id}
-                  className={`slide-item${insertAfter === index ? ' insert-target' : ''}`}
-                >
-                  <div className="slide-preview-wrap">
-                    <SlidePreview slide={slide} />
-                    <div className="slide-overlay">
-                      <div className="slide-actions-top">
-                        <button onClick={() => moveSlide(index, 'up')} disabled={index === 0} title="Move up">↑</button>
-                        <button onClick={() => moveSlide(index, 'down')} disabled={index === slides.length - 1} title="Move down">↓</button>
-                        <button
-                          onClick={() => selectInsertPosition(index)}
-                          className={`insert-btn${insertAfter === index ? ' active' : ''}`}
-                          title="Insert verse after this slide"
-                        >+</button>
-                        <button onClick={() => startEdit(slide)} className="edit-btn" title="Edit">✎</button>
-                        <button onClick={() => removeSlide(slide.id)} className="delete-btn" title="Remove">✕</button>
-                      </div>
-                      <button className="download-single" onClick={() => downloadOne(index)}>↓ PNG</button>
-                    </div>
-                  </div>
-                  <div className="slide-label">
-                    {slide.type === 'verse' ? slide.reference : slide.content.slice(0, 48)}
-                  </div>
-                </div>
-              ))}
-            </div>
           )}
-        </section>
+        </div>
 
-        <footer className="footer">
-          <p>1920×1080 · Transparent background · Montserrat · KJV</p>
-        </footer>
-      </main>
+      </div>
     </div>
   )
 }
