@@ -240,7 +240,7 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <img src="/WHT_Logo.png" alt="Logo" className="header-logo" />
+        <img src="/bwbc_light_logo.png" alt="Logo" className="header-logo" />
         <h1>Sermon Slide Creator</h1>
         <p>Transparent PNG slides for worship</p>
       </header>
