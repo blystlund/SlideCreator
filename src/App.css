@@ -45,40 +45,40 @@ body {
 .main {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1.75rem 2rem 3rem;
+  padding: 2rem 2rem 3rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .input-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 /* ── Cards ── */
 .input-card {
-  background: rgba(40, 4, 4, 0.6);
-  border-radius: 12px;
-  padding: 1.25rem;
-  border: 1px solid rgba(120, 20, 20, 0.3);
+  background: #1a1a22;
+  border-radius: 14px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .input-card h2 {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(240, 180, 180, 0.55);
-  margin-bottom: 0.3rem;
+  letter-spacing: 0.12em;
+  color: rgba(160, 90, 90, 0.8);
+  margin-bottom: 0.25rem;
 }
 
 .input-hint {
-  font-size: 0.79rem;
-  color: rgba(210, 160, 160, 0.4);
-  margin-bottom: 0.85rem;
-  line-height: 1.45;
+  font-size: 0.8rem;
+  color: rgba(180, 180, 200, 0.45);
+  margin-bottom: 1rem;
+  line-height: 1.5;
 }
 
 /* ── Inputs ── */
@@ -86,14 +86,14 @@ body {
 
 .input-row input,
 .input-card textarea {
-  padding: 0.65rem 0.9rem;
-  border-radius: 8px;
-  border: 1px solid rgba(120, 20, 20, 0.4);
-  background: rgba(0, 0, 0, 0.3);
+  padding: 0.7rem 1rem;
+  border-radius: 9px;
+  border: 1px solid rgba(120, 40, 40, 0.4);
+  background: rgba(0, 0, 0, 0.35);
   color: #f0f0f0;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-family: 'Montserrat', sans-serif;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, background 0.15s;
 }
 
 .input-row input { flex: 1; }
@@ -101,29 +101,30 @@ body {
 .input-card textarea {
   width: 100%;
   resize: vertical;
-  margin-bottom: 0.75rem;
-  line-height: 1.5;
+  margin-bottom: 0.875rem;
+  line-height: 1.55;
+  min-height: 110px;
 }
 
 .input-row input::placeholder,
-.input-card textarea::placeholder { color: rgba(180, 120, 120, 0.35); }
+.input-card textarea::placeholder { color: rgba(160, 140, 140, 0.35); }
 
 .input-row input:focus,
 .input-card textarea:focus {
   outline: none;
-  border-color: rgba(220, 160, 160, 0.6);
-  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(200, 80, 80, 0.65);
+  background: rgba(0, 0, 0, 0.5);
 }
 
-.input-row input:disabled { opacity: 0.5; }
+.input-row input:disabled { opacity: 0.45; }
 
 /* ── Primary buttons ── */
 .input-row button,
 .button-row button {
-  padding: 0.65rem 1.1rem;
-  border-radius: 8px;
+  padding: 0.7rem 1.25rem;
+  border-radius: 9px;
   border: none;
-  background: #e0e0e0;
+  background: #e8e8e8;
   color: #1a0000;
   font-weight: 700;
   cursor: pointer;
@@ -138,17 +139,17 @@ body {
 .button-row button:hover:not(:disabled) { background: #ffffff; }
 
 .input-row button:disabled,
-.button-row button:disabled { opacity: 0.35; cursor: not-allowed; }
+.button-row button:disabled { opacity: 0.3; cursor: not-allowed; }
 
 .button-row { display: flex; gap: 0.5rem; }
 
 .file-button {
   display: inline-block;
-  padding: 0.65rem 1.1rem;
-  border-radius: 8px;
+  padding: 0.7rem 1.25rem;
+  border-radius: 9px;
   background: transparent;
-  border: 1px solid rgba(160, 40, 40, 0.45);
-  color: rgba(220, 170, 170, 0.8);
+  border: 1px solid rgba(140, 50, 50, 0.45);
+  color: rgba(210, 160, 160, 0.75);
   font-weight: 600;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -157,18 +158,18 @@ body {
 }
 
 .file-button:hover {
-  border-color: rgba(220, 80, 80, 0.6);
+  border-color: rgba(200, 80, 80, 0.65);
   color: #f0d0d0;
 }
 
-.error { color: #ff9999; font-size: 0.78rem; margin-top: 0.5rem; }
+.error { color: #ff9090; font-size: 0.8rem; margin-top: 0.5rem; }
 
 /* ── Slides section ── */
 .slides-section {
-  background: rgba(20, 2, 2, 0.5);
-  border-radius: 12px;
-  padding: 1.25rem;
-  border: 1px solid rgba(100, 10, 10, 0.3);
+  background: #1a1a22;
+  border-radius: 14px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .slides-header {
@@ -181,19 +182,19 @@ body {
 }
 
 .slides-header h2 {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: rgba(240, 180, 180, 0.55);
+  letter-spacing: 0.12em;
+  color: rgba(160, 90, 90, 0.8);
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
 .slide-count {
-  background: rgba(120, 10, 10, 0.5);
-  border: 1px solid rgba(180, 30, 30, 0.35);
+  background: rgba(120, 20, 20, 0.45);
+  border: 1px solid rgba(180, 40, 40, 0.3);
   border-radius: 20px;
   padding: 0.1rem 0.55rem;
   font-size: 0.68rem;
@@ -205,9 +206,9 @@ body {
 .clear-btn {
   padding: 0.48rem 0.85rem;
   border-radius: 8px;
-  border: 1px solid rgba(160, 60, 60, 0.35);
+  border: 1px solid rgba(160, 60, 60, 0.3);
   background: transparent;
-  color: rgba(210, 140, 140, 0.6);
+  color: rgba(200, 130, 130, 0.55);
   font-weight: 600;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -224,7 +225,7 @@ body {
   padding: 0.48rem 1rem;
   border-radius: 8px;
   border: none;
-  background: #e0e0e0;
+  background: #e8e8e8;
   color: #1a0000;
   font-weight: 700;
   cursor: pointer;
@@ -240,13 +241,13 @@ body {
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  color: rgba(200, 140, 140, 0.4);
+  color: rgba(180, 140, 140, 0.35);
 }
 
 .empty-hint {
   font-size: 0.8rem;
   margin-top: 0.4rem;
-  color: rgba(180, 120, 120, 0.3);
+  color: rgba(160, 120, 120, 0.25);
 }
 
 /* ── Slide grid ── */
@@ -275,12 +276,12 @@ body {
   background-position: 0 0, 0 7px, 7px -7px, -7px 0px;
   border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(80, 8, 8, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   transition: border-color 0.15s;
 }
 
 .slide-item:hover .slide-preview-wrap {
-  border-color: rgba(200, 140, 140, 0.4);
+  border-color: rgba(200, 140, 140, 0.35);
 }
 
 /* Slide hover overlay */
@@ -318,7 +319,7 @@ body {
   transition: background 0.1s, color 0.1s;
 }
 
-.slide-actions-top button:hover:not(:disabled) { background: rgba(30, 0, 0, 0.95); color: #fff; }
+.slide-actions-top button:hover:not(:disabled) { background: rgba(30, 30, 30, 0.95); color: #fff; }
 .slide-actions-top button:disabled { opacity: 0.22; cursor: not-allowed; }
 .slide-actions-top .edit-btn:hover   { background: rgba(20, 50, 120, 0.9) !important; }
 .slide-actions-top .delete-btn:hover { background: rgba(150, 0, 0, 0.92) !important; }
@@ -342,7 +343,7 @@ body {
 
 .slide-label {
   font-size: 0.68rem;
-  color: rgba(200, 150, 150, 0.4);
+  color: rgba(180, 140, 140, 0.4);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -363,8 +364,8 @@ body {
 }
 
 .edit-modal {
-  background: #1c0404;
-  border: 1px solid rgba(160, 30, 30, 0.45);
+  background: #1a1a22;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 14px;
   padding: 1.5rem;
   width: 100%;
@@ -380,7 +381,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(240, 180, 180, 0.55);
+  color: rgba(160, 90, 90, 0.8);
   margin-bottom: 0.25rem;
 }
 
@@ -389,15 +390,15 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(200, 140, 140, 0.5);
+  color: rgba(180, 140, 140, 0.5);
 }
 
 .edit-textarea,
 .edit-input {
   width: 100%;
-  padding: 0.65rem 0.9rem;
-  border-radius: 8px;
-  border: 1px solid rgba(140, 20, 20, 0.4);
+  padding: 0.7rem 1rem;
+  border-radius: 9px;
+  border: 1px solid rgba(120, 40, 40, 0.4);
   background: rgba(0, 0, 0, 0.35);
   color: #f0f0f0;
   font-size: 0.88rem;
@@ -414,7 +415,7 @@ body {
 .edit-textarea:focus,
 .edit-input:focus {
   outline: none;
-  border-color: rgba(220, 150, 150, 0.6);
+  border-color: rgba(200, 80, 80, 0.65);
 }
 
 .edit-buttons {
@@ -426,9 +427,9 @@ body {
 
 .btn-save {
   padding: 0.6rem 1.25rem;
-  border-radius: 8px;
+  border-radius: 9px;
   border: none;
-  background: #e0e0e0;
+  background: #e8e8e8;
   color: #1a0000;
   font-weight: 700;
   cursor: pointer;
@@ -441,10 +442,10 @@ body {
 
 .btn-cancel {
   padding: 0.6rem 1.1rem;
-  border-radius: 8px;
-  border: 1px solid rgba(140, 40, 40, 0.4);
+  border-radius: 9px;
+  border: 1px solid rgba(140, 50, 50, 0.4);
   background: transparent;
-  color: rgba(210, 150, 150, 0.65);
+  color: rgba(200, 150, 150, 0.6);
   font-weight: 600;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -453,7 +454,7 @@ body {
 }
 
 .btn-cancel:hover {
-  border-color: rgba(200, 70, 70, 0.55);
+  border-color: rgba(200, 80, 80, 0.6);
   color: #ffb0b0;
 }
 
@@ -461,7 +462,7 @@ body {
 .footer {
   text-align: center;
   padding: 0.75rem 1rem;
-  color: rgba(160, 90, 90, 0.35);
+  color: rgba(140, 100, 100, 0.3);
   font-size: 0.7rem;
   letter-spacing: 0.04em;
 }
