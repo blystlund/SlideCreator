@@ -59,10 +59,10 @@ body {
 
 /* ── Cards ── */
 .input-card {
-  background: #1a1a22;
+  background: #f0f0f2;
   border-radius: 14px;
   padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .input-card h2 {
@@ -70,13 +70,13 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: rgba(160, 90, 90, 0.8);
+  color: rgba(100, 30, 30, 0.75);
   margin-bottom: 0.25rem;
 }
 
 .input-hint {
   font-size: 0.8rem;
-  color: rgba(180, 180, 200, 0.45);
+  color: rgba(40, 30, 30, 0.5);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -88,12 +88,12 @@ body {
 .input-card textarea {
   padding: 0.7rem 1rem;
   border-radius: 9px;
-  border: 1px solid rgba(120, 40, 40, 0.4);
-  background: rgba(0, 0, 0, 0.35);
-  color: #f0f0f0;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #ffffff;
+  color: #1a1a1a;
   font-size: 0.9rem;
   font-family: 'Montserrat', sans-serif;
-  transition: border-color 0.15s, background 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .input-row input { flex: 1; }
@@ -107,13 +107,13 @@ body {
 }
 
 .input-row input::placeholder,
-.input-card textarea::placeholder { color: rgba(160, 140, 140, 0.35); }
+.input-card textarea::placeholder { color: rgba(0, 0, 0, 0.28); }
 
 .input-row input:focus,
 .input-card textarea:focus {
   outline: none;
-  border-color: rgba(200, 80, 80, 0.65);
-  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(160, 30, 30, 0.5);
+  box-shadow: 0 0 0 3px rgba(160, 30, 30, 0.1);
 }
 
 .input-row input:disabled { opacity: 0.45; }
@@ -124,8 +124,8 @@ body {
   padding: 0.7rem 1.25rem;
   border-radius: 9px;
   border: none;
-  background: #e8e8e8;
-  color: #1a0000;
+  background: #1a0000;
+  color: #ffffff;
   font-weight: 700;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -136,7 +136,7 @@ body {
 }
 
 .input-row button:hover:not(:disabled),
-.button-row button:hover:not(:disabled) { background: #ffffff; }
+.button-row button:hover:not(:disabled) { background: #330000; }
 
 .input-row button:disabled,
 .button-row button:disabled { opacity: 0.3; cursor: not-allowed; }
@@ -148,8 +148,8 @@ body {
   padding: 0.7rem 1.25rem;
   border-radius: 9px;
   background: transparent;
-  border: 1px solid rgba(140, 50, 50, 0.45);
-  color: rgba(210, 160, 160, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(30, 20, 20, 0.6);
   font-weight: 600;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -158,8 +158,8 @@ body {
 }
 
 .file-button:hover {
-  border-color: rgba(200, 80, 80, 0.65);
-  color: #f0d0d0;
+  border-color: rgba(120, 20, 20, 0.5);
+  color: #1a0000;
 }
 
 .error { color: #ff9090; font-size: 0.8rem; margin-top: 0.5rem; }
