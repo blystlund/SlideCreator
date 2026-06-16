@@ -42,7 +42,6 @@ function SlidePreview({ slide }: { slide: Slide }) {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Wait for Montserrat to be ready before drawing
     await Promise.all([
       document.fonts.load(`600 64px "Montserrat"`),
       document.fonts.load(`500 36px "Montserrat"`),
@@ -114,6 +113,9 @@ export default function App() {
   const [inputText, setInputText] = useState('')
   const [exporting, setExporting] = useState(false)
 
+  // Insert-at position: null = append to end, number = insert after that index
+  const [insertAfter, setInsertAfter] = useState<number | null>(null)
+
   // Edit modal
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editContent, setEditContent] = useState('')
@@ -131,16 +133,28 @@ export default function App() {
     const result = await fetchVerse(verseInput)
     setVerseLoading(false)
     if (result) {
-      setSlides(prev => [...prev, {
+      const newSlide: Slide = {
         id: crypto.randomUUID(),
         type: 'verse',
         content: result.verse,
         reference: result.reference,
-      }])
+      }
+      setSlides(prev => {
+        if (insertAfter === null) return [...prev, newSlide]
+        const arr = [...prev]
+        arr.splice(insertAfter + 1, 0, newSlide)
+        return arr
+      })
       setVerseInput('')
+      // Advance insert position so next verse goes right after the one just added
+      if (insertAfter !== null) setInsertAfter(insertAfter + 1)
     } else {
       setVerseError('Verse not found. Try "John 3:16" or "Psalm 23:1-6".')
     }
+  }
+
+  const selectInsertPosition = (index: number) => {
+    setInsertAfter(prev => prev === index ? null : index)
   }
 
   // ── Text / docx ───────────────────────────────────────────────────────────
@@ -263,7 +277,14 @@ export default function App() {
 
           <div className="input-card">
             <h2>Scripture Verse</h2>
-            <p className="input-hint">Single verse or passage — e.g. "John 3:16" or "Romans 8:28-30"</p>
+            {insertAfter !== null ? (
+              <p className="input-hint insert-active">
+                Inserting after slide {insertAfter + 1}
+                <button className="clear-insert" onClick={() => setInsertAfter(null)}>✕ back to end</button>
+              </p>
+            ) : (
+              <p className="input-hint">Single verse or passage — e.g. "John 3:16" or "Romans 8:28-30"</p>
+            )}
             <div className="input-row">
               <input
                 type="text"
@@ -311,7 +332,6 @@ export default function App() {
                 className="edit-textarea"
                 value={editContent}
                 onChange={e => setEditContent(e.target.value)}
-                rows={4}
                 autoFocus
               />
 
@@ -343,6 +363,9 @@ export default function App() {
             </h2>
             {slides.length > 0 && (
               <div className="header-actions">
+                {insertAfter !== null && (
+                  <span className="insert-badge">Inserting after #{insertAfter + 1}</span>
+                )}
                 <button className="clear-btn" onClick={clearAll}>Clear All</button>
                 <button className="download-all" onClick={downloadAll} disabled={exporting}>
                   {exporting ? 'Downloading…' : 'Download All PNGs'}
@@ -359,13 +382,21 @@ export default function App() {
           ) : (
             <div className="slides-grid" ref={canvasGridRef}>
               {slides.map((slide, index) => (
-                <div key={slide.id} className="slide-item">
+                <div
+                  key={slide.id}
+                  className={`slide-item${insertAfter === index ? ' insert-target' : ''}`}
+                >
                   <div className="slide-preview-wrap">
                     <SlidePreview slide={slide} />
                     <div className="slide-overlay">
                       <div className="slide-actions-top">
                         <button onClick={() => moveSlide(index, 'up')} disabled={index === 0} title="Move up">↑</button>
                         <button onClick={() => moveSlide(index, 'down')} disabled={index === slides.length - 1} title="Move down">↓</button>
+                        <button
+                          onClick={() => selectInsertPosition(index)}
+                          className={`insert-btn${insertAfter === index ? ' active' : ''}`}
+                          title="Insert verse after this slide"
+                        >+</button>
                         <button onClick={() => startEdit(slide)} className="edit-btn" title="Edit">✎</button>
                         <button onClick={() => removeSlide(slide.id)} className="delete-btn" title="Remove">✕</button>
                       </div>
