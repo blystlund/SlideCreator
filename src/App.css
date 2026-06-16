@@ -473,14 +473,14 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: rgba(120, 30, 30, 0.85);
+  color: #E8692A;
   font-weight: 600;
 }
 
 .clear-insert {
   background: none;
   border: none;
-  color: rgba(120, 30, 30, 0.6);
+  color: rgba(232, 105, 42, 0.7);
   font-size: 0.75rem;
   cursor: pointer;
   padding: 0;
@@ -488,27 +488,27 @@ body {
   text-decoration: underline;
 }
 
-.clear-insert:hover { color: #1a0000; }
+.clear-insert:hover { color: #E8692A; }
 
 .insert-badge {
   font-size: 0.72rem;
   font-weight: 600;
-  color: rgba(120, 30, 30, 0.8);
-  background: rgba(160, 30, 30, 0.1);
-  border: 1px solid rgba(160, 30, 30, 0.25);
+  color: #E8692A;
+  background: rgba(232, 105, 42, 0.12);
+  border: 1px solid rgba(232, 105, 42, 0.35);
   border-radius: 20px;
   padding: 0.2rem 0.65rem;
 }
 
 .slide-item.insert-target .slide-preview-wrap {
-  border-color: rgba(160, 30, 30, 0.7);
-  box-shadow: 0 0 0 2px rgba(160, 30, 30, 0.2);
+  border-color: #E8692A;
+  box-shadow: 0 0 0 3px rgba(232, 105, 42, 0.35);
 }
 
 .slide-actions-top .insert-btn { font-size: 1.1rem; font-weight: 700; }
 
 .slide-actions-top .insert-btn.active {
-  background: rgba(120, 20, 20, 0.92) !important;
+  background: #E8692A !important;
   color: #fff;
 }
 
